@@ -56,7 +56,6 @@
       }
       else if(type === 'text/xml')
       {
-        const obj = JSON.parse(xhr.response);
         const id = xhr.responseXML.querySelector('id').textContent;
         const message = xhr.responseXML.querySelector('message').textContent;
 
