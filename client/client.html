@@ -20,6 +20,8 @@
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
 
+      console.log("Type: "+type);
+
       if(type === 'application/json')
       {
         const obj = JSON.parse(xhr.response);
@@ -86,9 +88,6 @@
         h1.textContent = `${title}`;
         p.textContent = `Message: ${message}`;
       }
-
-      console.log("Type: "+type);
-      console.log("XHR: "+xhr);
 
       content.appendChild(h1);
       content.appendChild(p);
