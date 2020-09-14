@@ -4,6 +4,8 @@ const respond = (request, response, content, type, status) => {
   response.end();
 };
 
+
+
 const getSuccess = (request, response, acceptedTypes) => {
   const jsonReturn = {
     message: 'This is a successful response'
@@ -52,7 +54,7 @@ const getUnauthorized = (request, response, acceptedTypes, params) => {
     message: 'You have successfully viewed the content',
   };
 
-  if (!params.valid || params.loggedIn !== 'true') {
+  if (!params.loggedIn || params.loggedIn !== 'yes') {
     jsonReturn.id = 'unauthorized';
     jsonReturn.message = 'Missing loggedIn query parameter set to yes';
   }
