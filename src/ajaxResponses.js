@@ -4,9 +4,9 @@ const respond = (request, response, content, type, status) => {
   response.end();
 };
 
-const getSuccess = (request, response, acceptedTypes, message) => {
+const getSuccess = (request, response, acceptedTypes) => {
   const jsonReturn = {
-    message: 'This is a successful response',
+    message: 'This is a successful response'
   };
 
   if (acceptedTypes[0] === 'text/xml') {
@@ -21,7 +21,7 @@ const getSuccess = (request, response, acceptedTypes, message) => {
   return respond(request, response, jsonString, 'application/json', 200);
 };
 
-const getBad = (request, response, acceptedTypes, message, id) => {
+const getBad = (request, response, acceptedTypes) => {
   const jsonReturn = {
     id: 'badRequest',
     message: 'Missing valid query parameter set to true',
