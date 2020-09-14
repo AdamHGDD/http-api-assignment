@@ -15,6 +15,7 @@
       const type = xhr.getResponseHeader('content type');
 
       const content = document.querySelector('#content');
+      content.innerHTML = "";
 
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
@@ -85,6 +86,8 @@
         h1.textContent = `${title}`;
         p.textContent = `Message: ${message}`;
       }
+
+      console.log("Type: "+type);
 
       content.appendChild(h1);
       content.appendChild(p);
