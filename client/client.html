@@ -12,7 +12,7 @@
 
     const handleResponse = (xhr) => {
       console.log("Handled Response Something");
-      const type = xhr.getResponseHeader('content type');
+      const type = xhr.getResponseHeader('Content-Type');
 
       const content = document.querySelector('#content');
       content.innerHTML = "";
