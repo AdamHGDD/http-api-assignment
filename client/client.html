@@ -11,6 +11,7 @@
     let typeSelector;
 
     const handleResponse = (xhr) => {
+      console.log("Handled Response Something");
       const type = xhr.getResponseHeader('content type');
 
       const content = document.querySelector('#content');
@@ -90,6 +91,7 @@
     };
 
     const sendAjax = (url, acceptedType) => {
+      console.log("Sent Ajax");
       const xhr = new XMLHttpRequest();
 
       xhr.open('GET', url);
@@ -101,6 +103,7 @@
     };
 
     const sendSomething = () => {
+      console.log("Sent Something");
       sendAjax(pageSelector.value, typeSelector.value);
     };
 
