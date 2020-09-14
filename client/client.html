@@ -7,25 +7,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
 
+    // Information from the page to remember
     let pageSelector;
     let typeSelector;
 
+    // Method for when ever a request is made with the button
     const handleResponse = (xhr) => {
-      console.log("Handled Response Something");
+      // Get type of file returned
       const type = xhr.getResponseHeader('Content-Type');
 
+      // Get where it will go on the page and empty it
       const content = document.querySelector('#content');
       content.innerHTML = "";
 
       const h1 = document.createElement('h1');
       const p = document.createElement('p');
 
-      console.log("Type: "+type);
-
+      // JSON parse for json files
       if(type === 'application/json')
       {
         const obj = JSON.parse(xhr.response);
 
+        // Select the appropriate title
         let title = "Success";
 
         switch (obj.id) {
@@ -54,17 +57,20 @@
         h1.textContent = `${title}`;
         p.textContent = `Message: ${obj.message}`;
       }
+      // Query selector for XML files
       else if(type === 'text/xml')
       {
         const idXML = xhr.responseXML.querySelector('id');
         const message = xhr.responseXML.querySelector('message').textContent;
 
+        // Check there is an id field
         let id;
         if(idXML)
         {
           id = idXML.textContent;
         }
 
+        // Set up the title
         let title = "Success";
 
         switch (id) {
@@ -94,10 +100,12 @@
         p.textContent = `Message: ${message}`;
       }
 
+      // Display on page
       content.appendChild(h1);
       content.appendChild(p);
     };
 
+    // Method for making a request with the button
     const sendAjax = (url, acceptedType) => {
       console.log("Sent Ajax");
       const xhr = new XMLHttpRequest();
@@ -110,11 +118,13 @@
       xhr.send();
     };
 
+    // Basic helper method
     const sendSomething = () => {
       console.log("Sent Something");
       sendAjax(pageSelector.value, typeSelector.value);
     };
 
+    // Attach code to webpage
     const init = () => {
       pageSelector = document.querySelector("#page");
       typeSelector = document.querySelector("#type");
