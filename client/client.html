@@ -11,7 +11,82 @@
     let typeSelector;
 
     const handleResponse = (xhr) => {
+      const type = xhr.getResponseHeader('content type');
 
+      const content = document.querySelector('#content');
+
+      const h1 = document.createElement('h1');
+      const p = document.createElement('p');
+
+      if(type === 'application/json')
+      {
+        const obj = JSON.parse(xhr.response);
+
+        let title = "Success";
+
+        switch (obj.id) {
+          case 'badRequest':
+            title = "Bad Request";
+            break;
+          case 'unauthorized':
+            title = "Unauthorized";
+            break;
+          case 'forbidden':
+            title = "Forbidden";
+            break;
+          case 'internalError':
+            title = "Internal Server Error";
+            break;
+          case 'notImplemented':
+            title = "Not Implemented";
+            break;
+          case 'notFound':
+            title = "Not Found";
+            break;
+          default:
+            break;
+        }
+
+        h1.textContent = `${title}`;
+        p.textContent = `Message: ${obj.message}`;
+      }
+      else if(type === 'text/xml')
+      {
+        const obj = JSON.parse(xhr.response);
+        const id = xhr.responseXML.querySelector('id').textContent;
+        const message = xhr.responseXML.querySelector('message').textContent;
+
+        let title = "Success";
+
+        switch (id) {
+          case 'badRequest':
+            title = "Bad Request";
+            break;
+          case 'unauthorized':
+            title = "Unauthorized";
+            break;
+          case 'forbidden':
+            title = "Forbidden";
+            break;
+          case 'internalError':
+            title = "Internal Server Error";
+            break;
+          case 'notImplemented':
+            title = "Not Implemented";
+            break;
+          case 'notFound':
+            title = "Not Found";
+            break;
+          default:
+            break;
+        }
+
+        h1.textContent = `${title}`;
+        p.textContent = `Message: ${message}`;
+      }
+
+      content.appendChild(h1);
+      content.appendChild(p);
     };
 
     const sendAjax = (url, acceptedType) => {

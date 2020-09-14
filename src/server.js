@@ -2,6 +2,7 @@
 const http = require('http');
 const url = require('url');
 const pageHandler = require('./htmlResponses.js');
+const ajaxHandler = require('./ajaxResponses.js');
 
 // Find a valid port
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
@@ -9,10 +10,14 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const urlStruct = {
   '/': pageHandler.getIndex,
   '/style.css': pageHandler.getStyle,
-  index: pageHandler.getIndex,
+  '/success': ajaxHandler.getSuccess,
+  '/badRequest': ajaxHandler.getBad,
+  '/unauthorized': ajaxHandler.getUnauthorized,
+  '/forbidden': ajaxHandler.getForbidden,
+  '/internal': ajaxHandler.getInternalError,
+  '/notImplemented': ajaxHandler.getNotImplemented,
+  notfound: ajaxHandler.getNotFound,
 };
-
-
 
 // Request response code
 const onRequest = (request, response) => {
@@ -26,20 +31,13 @@ const onRequest = (request, response) => {
   // Print out what the url's information was
   console.log(parsedUrl);
 
-
-
   // Call relevant method
-  if (urlStruct[parsedUrl.pathname]) 
-  {
+  if (urlStruct[parsedUrl.pathname]) {
     urlStruct[parsedUrl.pathname](request, response, acceptedTypes);
-  } 
-  else
-  {
-    urlStruct.index(request, response);
+  } else {
+    urlStruct.notfound(request, response, acceptedTypes);
   }
 };
-
-
 
 // Call HTTP to set up request response function
 http.createServer(onRequest).listen(port);
