@@ -56,8 +56,14 @@
       }
       else if(type === 'text/xml')
       {
-        const id = xhr.responseXML.querySelector('id').textContent;
+        const idXML = xhr.responseXML.querySelector('id');
         const message = xhr.responseXML.querySelector('message').textContent;
+
+        let id;
+        if(idXML)
+        {
+          id = idXML.textContent;
+        }
 
         let title = "Success";
 

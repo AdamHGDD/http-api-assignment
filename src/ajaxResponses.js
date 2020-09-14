@@ -21,15 +21,22 @@ const getSuccess = (request, response, acceptedTypes) => {
   return respond(request, response, jsonString, 'application/json', 200);
 };
 
-const getBad = (request, response, acceptedTypes) => {
+const getBad = (request, response, acceptedTypes, params) => {
   const jsonReturn = {
-    id: 'badRequest',
-    message: 'Missing valid query parameter set to true',
+    message: 'This response has the required parameters',
   };
+
+  if (!params.valid || params.valid !== 'true') {
+    jsonReturn.id = 'badRequest';
+    jsonReturn.message = 'Missing valid query parameter set to true';
+  }
 
   if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
-    responseXML = `${responseXML} <id>${jsonReturn.id}</id>`;
+    if(jsonReturn.id)
+    {
+      responseXML = `${responseXML} <id>${jsonReturn.id}</id>`;
+    }
     responseXML = `${responseXML} <message>${jsonReturn.message}</message>`;
     responseXML = `${responseXML} </response>`;
 
@@ -40,15 +47,22 @@ const getBad = (request, response, acceptedTypes) => {
   return respond(request, response, jsonString, 'application/json', 400);
 };
 
-const getUnauthorized = (request, response, acceptedTypes) => {
+const getUnauthorized = (request, response, acceptedTypes, params) => {
   const jsonReturn = {
-    id: 'unauthorized',
-    message: 'Missing loggedIn query parameter set to yes',
+    message: 'You have successfully viewed the content',
   };
+
+  if (!params.valid || params.loggedIn !== 'true') {
+    jsonReturn.id = 'unauthorized';
+    jsonReturn.message = 'Missing loggedIn query parameter set to yes';
+  }
 
   if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
-    responseXML = `${responseXML} <id>${jsonReturn.id}</id>`;
+    if(jsonReturn.id)
+    {
+      responseXML = `${responseXML} <id>${jsonReturn.id}</id>`;
+    }
     responseXML = `${responseXML} <message>${jsonReturn.message}</message>`;
     responseXML = `${responseXML} </response>`;
 
